@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% set title='Home' %}
+
+{% block content %}
+
+	{% for post in posts %}
+
+	{% if user.username == post.author.get().username %}
+	
+	<article>
+<form name="myform1" method="GET" action="/delete">
+		<section>
+		
+
+			<a href="/post/{{post.key.id()}}" class="title">{{post.title | safe}}</a>
+			<h2 class="author">by <strong>{{post.author.get().username}}</strong> on {{post.created.strftime('%d %b, %Y')}}</h2>
+			
+
+		</section>
+	
+			<p class="post-content">{{post.content.replace('\n', '<br>') | safe}}</p>
+
+<a href="/delete/{{post.key.id()}}" class="like">DELETE</a>    
+<a href="/edit/{{post.key.id()}}" class="like">EDIT</a>
+
+	</form>
+		{% endif %}
+
+	</article>
+
+		{% else %}
+	<div class="no-post">
+		<p>Drats! No posts found :(</p>	
+	</div>
+
+	{% endfor %}
+
+{% endblock content %}

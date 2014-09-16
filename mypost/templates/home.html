@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% set title='Home' %}
+
+{% block content %}
+	{% for post in posts %}
+	<article>
+		<section>
+			<a href="/post/{{post.key.id()}}" class="title">{{post.title | safe}}</a>
+			<h2 class="author">by <strong>{{post.author.get().username}}</strong> on {{post.created.strftime('%d %b, %Y')}}</h2>
+		</section>
+		{% if permalink %}
+			<p class="post-content">{{post.content.replace('\n', '<br>') | safe}}</p>
+		{% else %}
+			<p class="post-content">
+				{{post.content.replace('\n', '<br>') | truncate |safe}}
+				<a href="/post/{{post.key.id()}}" class="aread">Read More &raquo;</a>
+			</p>
+
+
+		{% endif %}
+	</article>
+		{% else %}
+	<div class="no-post">
+		<p>Drats! No posts found :(</p>	
+	</div>
+	{% endfor %}
+{% endblock content %}

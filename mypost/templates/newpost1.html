@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% set title='Add a new post' %}
+
+{% block content %}
+	<form name="myform3" method="POST" action="/newpost1/{{post.id}}">
+
+<script type="text/javascript">
+var count = "255";  
+function limiter(){
+var tex = document.myform3.content.value;
+var len = tex.length;
+if(len > count){
+        tex = tex.substring(0,count);
+        document.myform3.content.value =tex;
+        return false;
+}
+document.myform3.limit.value = count-len;
+}
+</script>
+<article>
+		<legend class="title">EDIT POST</legend>
+		<label for="title">
+			Title
+			<input type="text" name="title" value="{{post.title}}" required>
+		</label>
+		<label for="content">
+			Content max 255 charecter
+			<textarea name=content wrap=physical rows=5 cols=70 onkeyup=limiter()>{{post.content}}</textarea><br>
+<script type="text/javascript">
+document.write("<input type=text name=limit size=2 readonly value="+count+">");
+</script>
+		</label>
+		<label for="submit">
+			<input type="submit" value="Publish">
+		</label>
+	</article>
+	</form>
+{% endblock content %}

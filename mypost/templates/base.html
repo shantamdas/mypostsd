@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>{{ title }} &raquo; Mypost</title>
+		<meta charset="utf-8">
+		<meta name="author" content="Shantam Das">
+		<meta name="description" content="Mypostsd, a friendly blog.">
+		<link rel="stylesheet" href="/static/css/style.css">
+		<link href='http://fonts.googleapis.com/css?family=Quintessential' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Nova+Square' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Orbitron:700' rel='stylesheet' type='text/css'>
+	</head>
+
+	<body>
+		<div class="container">
+			<header>
+				<nav>
+					<h3>Welcome, {{ user.username or 'Guest' }}</h3>
+					<ul>
+						{% if user.username %}
+						<li><a href="/myhome" class="homlink">Home</a></li>
+						<li><a href="/newpost" class="homlink">New Post</a></li>
+						<li><a href="/logout" class="homlink">Logout</a></li>
+						<li><a href="/mypost" class="homlink">Myposts</a></li>
+						{% else %}
+						<li><a href="/" class="homlink">Home</a></li>
+						<li><a href="/login" class="homlink">Login</a></li>
+						<li><a href="/signup" class="homlink">Signup</a></li>
+						{% endif %}
+					</ul>
+				</nav>
+			</header>
+			{% if error %}
+			<section class="error">
+				{{error}}
+			</section>
+			{% endif %}
+			{% if success %}
+			<section class="success">
+				{{success}}
+			</section>
+			{% endif %}
+			<section class="content">
+				{% block content %}
+				{% endblock content %}
+			</section>
+		</div>
+		<footer>&copy Shantam Das | NITMAS </footer>
+	</body>
+
+</html>

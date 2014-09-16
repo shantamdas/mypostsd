@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% set title='Home' %}
+
+{% block content %}
+	{% for post in posts %}
+
+	<article>
+		<form name="myform1" method="GET" action="/comment/{{post.key.id()}}">
+		<section>
+			<a href="/post/{{post.key.id()}}" class="title">{{post.title | safe}}</a>
+			<h2 class="author">by <strong>{{post.author.get().username}}  </strong> on {{post.created.strftime('%d %b, %Y')}}</h2>
+		</section>
+		{% if permalink %}
+			<p class="post-content">{{post.content.replace('\n', '<br>') | safe}}</p>
+
+		{% else %}
+			<p class="post-content">
+				{{post.content.replace('\n', '<br>')| safe}}
+				
+			</p>
+
+<a href="/like/{{post.key.id()}}" class="like">Like</a>    {{post.like}}  <br>
+<h4 class="author">comments:</h4>
+			<p >{% for comments in post.comment %}
+				 {{comments}} <br>
+				{% endfor %}
+			</p> 
+				<textarea name="commentt" wrap=physical rows=2 cols=60 class="comment" placeholder="your comment" ></textarea>
+				<input type="submit" value="comment">
+
+
+		{% endif %}
+	</form>
+	</article>
+		{% else %}
+	<div class="no-post">
+		<p>Drats! No posts found :(</p>	
+	</div>
+	{% endfor %}
+{% endblock content %}
